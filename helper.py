@@ -2,7 +2,6 @@ from numpy import double
 import tldextract
 from collections import Counter
 import math
-from tld import get_tld
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -275,14 +274,14 @@ def get_list_of_domains(str_array):
         df = pd.DataFrame(preprocessed_data,index=[0])
         df['label'] = 0
 
-        with open('models/dga_tld_encoder.pkl', 'rb') as encoder_file:
+        with open('./pcap_tld_encoder.pkl', 'rb') as encoder_file:
          encoder = pickle.load(encoder_file)
 
          encoded_data = encoder.transform(df)
 
          encoded_data = encoded_data.drop(['label'], axis=1)
 
-         with open('models/dga_svm_model.pkl', 'rb') as model_file:
+         with open('./pcap_rf_model.pkl', 'rb') as model_file:
              model = pickle.load(model_file)
      
          predict = model.predict(encoded_data)[0]
